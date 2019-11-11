@@ -1,0 +1,31 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }} | {% trans 'Intelligny Portal' %}{% endblock %}
+
+{% block extrastyle %}
+	<style>
+	#header{ 
+		background-color: rgb(8, 38, 58); 
+		border-bottom: solid 3px #999; 
+	}
+
+	#branding h1{ 
+		color: #fff; 
+	}
+	.module h2, .module caption, .inline-group h2 { background:#ccc url(/admin_media/img/admin/nav-bg.gif) bottom left repeat-x; color: #333940; }
+	a.section:link, a.section:visited { color: #666666; }
+	#site-name{
+		text-align: center;
+	}
+	</style>
+{% endblock %}
+
+{% block branding %}
+<h1 class="text-center" id="site-name">{% trans 'Intelligny Portal' %}
+	<small> {% now "jS F Y H:i" %} </small>
+</h1>
+
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
