@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mb-2 mt-4">
+{% if messages %}
+	{% for message in messages %}
+		<div class="alert alert-info alert-dismissible text-center" role="alert" data-auto-dismiss>
+			
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<small><div aria-hidden="true">&times;</div></small>
+			</button>
+			<i class="fa fa-exclamation-triangle"></i>
+			{{message}}
+
+		</div>
+	{% endfor %}
+{% endif %}
+<h4 class="text-center">Intelligny Article&Post Archives</h4><br>
+<!---all-posts-page-carousel--->
+<div class="bd-intelligny">
+  <div id="carouselIntellignyCaptions" class="carousel slide" data-ride="carousel" >
+    <ol class="carousel-indicators">
+      <li data-target="#carouselIntellignyCaptions" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselIntellignyCaptions" data-slide-to="1"></li>
+      <li data-target="#carouselIntellignyCaptions" data-slide-to="2"></li>
+      <li data-target="#carouselIntellignyCaptions" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner" style="height: 400px;">
+      <div class="carousel-item active" style="height: 400px;">
+        <img src="../media/images/alshanti.jpg" class="d-block w-100" alt="..." style="height: 400px; opacity: .9;">
+        <div class="carousel-caption" style="height: 300px;">
+          <h1>Intelligeny Blog</h1>
+          <p class="lead text-center">Test your mind, know your knowledge-power</p>
+        </div>
+        <div class="carousel-caption" id="caption">
+        	{% if quotes %}
+		    	{% for quote in quotes %}
+			    	<div class="float-left text-center mt-4" >
+			    		<i>
+			    			<small><i class="fa fa-quote-left"></i></small>
+			    			{{quote.quote}} 
+			    			<small><i class="fa fa-quote-right"></i></small>
+			    			<small class="offset-4">~ {{quote.author}} ~</small>
+			    		</i>
+			    	</div>
+		    	{% endfor %}
+	   		{% endif %}
+        </div>
+      </div>
+      <div class="carousel-item" style="height: 400px;">
+        <img src="../media/images/nate.jpg" class="d-block w-100" alt="..." style="height: 400px;opacity: .9;">
+        <div class="carousel-caption" style="height: 300px;">
+          <h1>Intelligeny Blog</h1>
+          <p class="text-center lead">Read & Understand like it was your last day on earth</p>
+        </div>
+
+        <div class="carousel-caption" id="caption">
+        	{% if quotes %}
+		    	{% for quote in quotes %}
+			    	<div class="float-left text-center mt-4" >
+			    		<i>" {{quote.quote}} "
+			    		<small class="offset-4">~ {{quote.author}} ~</small></i>
+			    	</div>
+		    	{% endfor %}
+	   		{% endif %}
+        </div>
+      </div>
+      <div class="carousel-item" style="height: 400px;">
+        <img src="../media/images/crypto.png" class="d-block w-100" alt="..." style="height: 400px;opacity: .9;">
+        <div class="carousel-caption" style="height: 300px;">
+          <h1>Intelligeny Blog</h1>
+          <p class="text-center lead">The more you read, the more motivated we are to post more articles</p>
+        </div>
+
+        <div class="carousel-caption" id="caption">
+        	{% if quotes %}
+		    	{% for quote in quotes %}
+			    	<div class="float-left text-center mt-4" >
+			    		<i>" {{quote.quote}} "
+			    		<small class="offset-4">~ {{quote.author}} ~</small></i>
+			    	</div>
+		    	{% endfor %}
+	   		{% endif %}
+        </div>
+
+      </div>
+
+      <div class="carousel-item" style="height: 400px;">
+        <img src="../media/images/luca.jpg" class="d-block w-100" alt="..." style="height: 400px;opacity: .9;">
+        <div class="carousel-caption" style="height: 300px;">
+          <h1>Intelligeny Blog</h1>
+          <p class="text-center lead">Its free to acquire knowledge on this site, get some ideas you didn't know existed</p>
+        </div>
+
+        <div class="carousel-caption" id="caption">
+        	{% if quotes %}
+		    	{% for quote in quotes %}
+			    	<div class="float-left text-center mt-4 text-light" >
+			    		<i>" {{quote.quote}} "
+			    		<small class="offset-4">~ {{quote.author}} ~</small></i>
+			    	</div>
+		    	{% endfor %}
+	   		{% endif %}
+        </div>
+
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselIntellignyCaptions" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselIntellignyCaptions" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div><br>
+<div class="content" >
+<hr>
+<h4 class="text-center">---- All Articles & Posts - Read, Learn, Gain ----</h4>
+<hr>
+{% if posts %}
+<div class="row">
+	
+	{% for post in posts %}
+	<div class="col-sm-4">
+		<div class="card-deck">
+		  <div class="card mb-4" id="card-post">
+		    <img src="{{ post.image.url }}" class="card-img-top image" alt="..." 
+		    style="height: 190px;">
+		    <div class="card-body">
+				<h5 class="card-title">
+					<a href="{{ post.get_absolute_url}}">{{post.title}}</a>
+				</h5>
+				<p class="card-text">{{post.body|safe|slice:":70"}}{...}</p>
+				{% for category in post.categories.all %}
+				<p class="card-text">
+					<small class="text-muted">{{category.name}} | Posted on {{post.created_on}}</small>
+				</p>
+				{% endfor %}
+				<a href="{{ post.get_absolute_url}}" class="text-success d-flex flex-row-reverse "><h5 class="waves-effect waves-light">Read more
+				<i class="fas fa-angle-double-right"></i>
+				</h5>
+				</a>
+		    </div>
+		  </div>
+		</div>
+	</div>
+	{% endfor %}
+
+</div>
+	<nav class="">
+		<ul class="pagination">
+		  {% if posts.has_previous %}
+		  	<li class="page-item">
+			  	<a class="pagination-action page-link" href="?page=1">
+			     <i class="fa fa-angle-double-left" aria-hidden="true"></i>
+			    </a>
+			</li>
+			<li class="page-item">
+			    <a class="pagination-action page-link" href="?page={{ posts.previous_page_number }}">
+			      <i class="fa fa-angle-left" aria-hidden="true"></i>
+			    </a>
+		  	</li>   
+		  {% endif %}
+
+		  {% for num in posts.paginator.page_range %}
+		  	<li class="page-item">
+			    {% if posts.number == num %}
+			    <span class="pagination-number page-link pagination-current">{{ num }}</span>
+			    {% elif num > posts.number|add:'-3' and num < posts.number|add:'3' %}
+			    
+			    	<a class="pagination-number page-link" href="?page={{ num }}">{{ num }}</a>
+			   
+			    {% endif %}
+			</li>
+		  {% endfor %}
+
+		  {% if posts.has_next %}
+		    <li class="page-item">
+			    <a class="pagination-action page-link" href="?page={{ posts.next_page_number }}">
+			      <i class="fa fa-angle-right" aria-hidden="true"></i>
+			    </a>
+			</li>
+			<li class="page-item">
+			    <a class="pagination-action page-link" href="?page={{ posts.paginator.num_pages }}">
+			      <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+			    </a>
+		    </li>
+		  {% endif %}
+		</ul>
+	</nav>
+{% else %}
+ <h3>No Published Posts Available</h3>
+{% endif %}
+
+</div>
+<hr>
+<div class="jumbotron bg-light">
+	<div class="container">
+		<h4 class="text-center">Its never too late to learn</h4>
+		<p class="lead text-center">Search, Find More, Explore, Equip yourself with information - Information is power, and so is knowledge.</p>
+		<p class="text-center lead">Its Time to REDISCOVER yourself, there's still TIME.</p>
+	</div>
+</div>
+<hr>
+	<h4 class="text-center">---- Test your knowledge, know your worth ----</h4>
+<hr>
+<div id="carousel-multi-item" class="carousel slide carousel-multi-item" data-ride="carousel">
+	
+  <div class="carousel-inner" role="listbox">
+  
+    <div class="carousel-item active">
+    	{% if last %}
+    	<div class="row">
+    		{% for last_post in last %}
+	        <div class="col-md-3">
+	        	<a href="{{last_post.get_absolute_url}}">
+			        <div class="card mb-2" style="height: 280px;">
+			          <img class="card-img-top" src="{{last_post.image.url}}"
+			            alt="Card image cap" style="height: 150px;">
+			          <div class="card-body">
+			          		<h5 class="card-title lead text-center">{{last_post.title}}</h5>
+			          </div>
+			        </div>
+		        </a>
+	      	</div>
+	      	{% endfor %}
+      	</div>
+      	{% endif %}
+    </div>
+   
+    <div class="carousel-item">
+      	{% if first %}
+    	<div class="row">
+    		{% for first_post in first %}
+	        <div class="col-md-3">
+	        	<a href="{{first_post.get_absolute_url}}">
+			        <div class="card mb-2" style="height: 280px;">
+			          <img class="card-img-top" src="{{first_post.image.url}}"
+			            alt="Card image cap" style="height: 150px;">
+			          <div class="card-body">
+			          		<h5 class="card-title lead text-center">{{first_post.title}}</h5>
+			          </div>
+			        </div>
+		    	</a>
+	      	</div>
+	      	{% endfor %}
+      	</div>
+      	{% endif %}
+    </div>
+
+  </div>
+</div>
+
+</div>
+<script type="text/javascript">
+	window.setTimeout(function () {
+	    $(".alert-info").fadeTo(500, 0).slideUp(500, function () {
+	        $(this).remove();
+	    });
+	}, 5000);
+</script>
+{% endblock content %}

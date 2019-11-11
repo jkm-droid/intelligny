@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-3">
+	<div class="col-sm-10" style="background-color: white; padding: 10px;">
+	{% if post_details %}
+
+		<h3 class="text-center mb-4">{{ post_details.title}}</h3>
+		<p style="color:grey;">
+			<i class="fa fa-edit" aria-hidden="true"></i>
+			Author: {{post_details.author}}
+			<i class="fa fa-clock-o"></i>
+			Posted on: {{post_details.created_on}}
+			{% if comments %}
+				<i class="fa fa-comments" aria-hidden="true"></i>
+				{{comments.count}} comments
+			{% endif %}
+			<i class="fa fa-folder"></i>
+			Category:
+			{% for category in post_details.categories.all %}
+				<a href="{{category.get_absolute_url}}" class="text-uppercase">{{ category.name }}</a>
+			{% endfor %}
+		</p>
+		<img src="{{post_details.image.url}}" class="post-image" alt="">
+		<p>{{ post_details.body | safe | linebreaks}}</p>
+		<br>
+		<p class="lead text-center">Remember to leave a comment below</p>
+		<hr>
+
+		{% if latest_posts %}
+		<h3 class="text-center">---- Grasp the Latest Stories ----</h3>
+		<hr>
+		<div class="">
+
+			{% for latest in latest_posts %}
+			<div class="card mb-3 ml-3 mr-3 border-light">
+			  <div class="row no-gutters">
+			  	<div class="col-md-4">
+			      <img src="{{latest.image.url}}" class="card-img" alt="..." style="height: 220px;">
+			    </div>
+			    <div class="col-md-8">
+			      <div class="card-body" id="latest-posts">
+			      	<a href="{{latest.get_absolute_url}}" style="color: black;">
+				        <h4 class="card-title text-info">{{latest.title}}</h4>
+				        Published on {{latest.created_on}} By {{latest.author}}
+				        <p class="card-text">{{latest.body| safe | slice:":200"}} [...]</p>
+			    	</a>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			{% endfor%}
+
+		</div>
+		{% endif %}
+
+	{% else %}
+		<h3>No details are available</h3>
+	{% endif %}
+	<div class="comments-form">
+	<h3>Leave a comment below</h3>
+	{% if messages %}
+		{% for message in messages %}
+			<p class="alert alert-info">{{message}}</p>
+		{% endfor %}
+	{% endif %}
+	
+		<form method="POST" action="/blog/{{post_details.slug}}/">
+			{% csrf_token %}
+			<div class="form-group">
+				{{ form.author}}
+			</div>
+
+			<div class="form-group">
+				{{form.body}}
+			</div>
+			<button class="btn btn-primary" type="submit">Post My Comment</button>
+		</form>
+	</div>
+	<hr>
+	<h3><i class="fa fa-comments" aria-hidden="true"></i>Comments</h3>
+	{% if comments %}
+	<p>{{comments.count}} comment(s) available</p>
+		{% for comment in comments %}
+			<i><i class="fa fa-user" aria-hidden="true"></i>
+			{{comment.author}} says
+			<small class="text-muted">{{comment.created_on}}</small></i>
+			<p>{{comment.body}}</p>
+			
+		{% endfor %}
+	{% else %}
+	<p class="text-center text-success">Be the First One to Comment</p>
+	{% endif %}
+</div>
+</div>
+{% endblock content %}
