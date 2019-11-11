@@ -95,11 +95,11 @@ WSGI_APPLICATION = 'fourthapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intelligny',
-        'USER': 'name',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': 'd8mu686k5gtqip',
+        'USER': 'vlbocsmlimhhoa',
+        'PASSWORD': '23cbc4fd174c08ffb4ace4eb3ec60dc259afbb7f19b6d1129eb4fbc63c6bb77d',
+        'HOST': 'ec2-174-129-253-47.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
